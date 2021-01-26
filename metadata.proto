@@ -1,0 +1,131 @@
+syntax = "proto3";
+package tnel.birdsong;
+
+message Session {
+
+    // ENUMS:
+
+    // Probe / Electrodes Specs (Message)
+    message Probe {
+        // Probe Type
+        enum ProbeManufacturer {
+             UNKNOWN_PROBE = 0;
+             NEURONEXUS = 1;
+             NEUROPIXEL = 2;
+         }
+        
+        // Target Brain Nuclei
+        enum BrainNucleus {
+             UNKNOWN_BRAINNUCLEUS = 0;
+             HVC = 1;
+             RA = 2;
+             HVC_RA = 3;
+         }
+        // Brain Hemisphere
+        enum BrainHemisphere {
+             UNKNOWN_BRAINHEMISPHERE = 0;
+             RIGHT = 1;
+             LEFT = 2;
+         }
+     
+        ProbeManufacturer mfg = 1;
+        string serial_number = 2;
+        int32 num_channels = 3;
+        int32 tip_depth_microns = 4;
+        BrainHemisphere hemisphere = 5;
+        BrainNucleus brain_nucleus= 6;
+        
+    }
+    
+    // Stimulus (Message)
+    message Stimulus {
+    
+        // Stimulus presented to subject during recordings
+        enum StimulusType {
+            UNKNOWN_STIMULUS = 0;
+            UNDIRECTED = 1;
+            DIRECTED = 2;
+            VIDEO_RECORDED = 3;
+            VIDEO_LIVE = 4;
+            SONG_REPLAY = 5;
+         }
+        
+        StimulusType stimulus_type = 1;
+        repeated string details = 2; // Any additional info
+    }
+    
+    // Procedure (Message)
+    message Procedure {
+    
+        // Experiment Type
+        enum ExperimentType {
+            UNKNOWN_EXPERYMENTTYPE = 0;
+            HABITUATION = 1;
+            CHRONIC_HVC = 2;
+            CHRONIC_RA = 3;
+            CHRONIC_HVCRA = 4;
+            ACUTE_HVC = 5;
+            ACUTE_RA = 6;
+            ACUTE_HVCRA = 7;        
+        }
+
+        // Hardware System used for recordings
+        enum EphysHardware {
+             UNKNOWN_EPHYSHARDWARE = 0;
+             OPENEPHYS = 1;
+             INTAN = 2;
+             NI = 3;
+         }
+
+        // Software used for recordings
+        enum EphysSoftware {
+             UNKNOWN_EPHYSSOFTWARE = 0;
+             SPIKEGLX = 1;
+             OPEPHYS = 2;
+             OPEPHYS_PLUS = 3;
+         }
+
+        ExperimentType experiment_type = 1;
+        repeated Stimulus stimuli = 2;
+        EphysHardware ephys_harware = 3;
+        EphysSoftware ephys_software = 4;
+        string headstage = 5;
+        repeated Probe probes = 6;
+    }
+    
+    
+    // MAIN MESSAGE
+    // Bird Type
+    enum BirdType {
+        UNKNOWN_BIRDTYPE = 0;
+        ZEBRA = 1;
+        STARLING = 2;
+        BENGALESE = 3;
+    }
+    
+    BirdType bird = 1;
+    string bird_uid = 2;
+    string date = 3;              // (iso8061, e.g. 2020-11-01)
+    float weight = 4;
+    bool testosterone = 5;
+    int32 cuervecito_box = 6;
+    repeated string details = 7; // Any additional info
+    
+    repeated Procedure procedure = 8;
+}
+
+
+// Compile message:
+// protoc --proto_path=/home/jovyan/pablo_tostado/bird_song/protobuffs --python_out=/home/jovyan/pablo_tostado/bird_song/protobuffs/ /home/jovyan/pablo_tostado/bird_song/protobuffs/metadata.proto
+
+
+//-> bird
+  //  -> date (session)
+    //    -> exp_type (habituation / chronic)
+        
+
+//-> bird
+  //  -> software_type (habituation / open_ephys(neuronexus) / spikeGLX (neuropixels))
+    //    -> session (date+time = 12_12_2020-7_00_15)
+      //     * .protoc file
+        //   * .json
