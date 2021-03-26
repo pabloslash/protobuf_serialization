@@ -7,12 +7,6 @@ message Session {
 
     // Probe / Electrodes Specs (Message)
     message Probe {
-        // Probe Type
-        enum ProbeManufacturer {
-             UNKNOWN_PROBE = 0;
-             NEURONEXUS = 1;
-             NEUROPIXEL = 2;
-         }
         
         // Target Brain Nuclei
         enum BrainNucleus {
@@ -28,10 +22,10 @@ message Session {
              LEFT = 2;
          }
      
-        ProbeManufacturer mfg = 1;
+        string manufacturer = 1; // neuronexus, neuropixel, masmanidis, inhouse
         string serial_number = 2;
         int32 num_channels = 3;
-        int32 tip_depth_microns = 4;
+        float tip_depth_microns = 4;
         BrainHemisphere hemisphere = 5;
         BrainNucleus brain_nucleus= 6;
         
@@ -105,9 +99,10 @@ message Session {
     
     BirdType bird = 1;
     string bird_uid = 2;
+    //BirdSex bird_sex = 1;
     string date = 3;              // (iso8061, e.g. 2020-11-01)
-    float weight = 4;
-    bool testosterone = 5;
+    float weight_grams = 4;
+    bool testosterone = 5;        // 0-No; 1-Yes;
     int32 cuervecito_box = 6;
     repeated string details = 7; // Any additional info
     
