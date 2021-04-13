@@ -3,88 +3,58 @@ package tnel.birdsong;
 
 message Session {
 
-    // ENUMS:
-
-    // Probe / Electrodes Specs (Message)
-    message Probe {
-        
-        // Target Brain Nuclei
-        enum BrainNucleus {
-             UNKNOWN_BRAINNUCLEUS = 0;
-             HVC = 1;
-             RA = 2;
-             HVC_RA = 3;
-         }
-        // Brain Hemisphere
-        enum BrainHemisphere {
-             UNKNOWN_BRAINHEMISPHERE = 0;
-             RIGHT = 1;
-             LEFT = 2;
-         }
-     
-        string manufacturer = 1; // neuronexus, neuropixel, masmanidis, inhouse
-        string serial_number = 2;
-        int32 num_channels = 3;
-        float tip_depth_microns = 4;
-        BrainHemisphere hemisphere = 5;
-        BrainNucleus brain_nucleus= 6;
-        
-    }
+    // MESSAGES:
     
-    // Stimulus (Message)
+    // Neural Probe
+    message NeuralProbe {
+        string acquisition_signal = 1;               // string: e.g. neural
+        string manufacturer = 2;                     // string: neuronexus, neuropixel, masmanidis, inhouse
+        string model = 3;                            // string: buzsaki32, neuropixels_1
+        string serial_number = 4;                    // string: U656
+        int32  num_channels = 5;                      // int32: 16, 32, 64, 384
+        float  tip_depth_microns = 6;                 // float: depth of the tip of the probe
+        string implant_coordinates_microns = 7;      // string: A/P, M/L, D/V
+        string hemisphere = 8;                       // string: left, right
+        repeated string brain_nucleus= 9;            // repeated string: [hvc], [hvc,ra], area_X
+        string headstage = 10;                       // string: e.g. H32
+        string channel_group = 11;                   // string: port_0, imec_0
+        string channels = 12;                        // string: e.g. 1-64,
+        repeated string details = 13;                // repeated string: Any additional info
+    }
+
+    // Sensor (Message)
+    message Sensor {
+        string acquisition_signal = 1;               // string: audio, audio, pressure, sync, emg, video
+        string manufacturer = 2;                     // string: miniDSP, earthworks, fujikura, inhouse, inhouse
+        string model = 3;                            // string: uma8, m30, fhm-20, uma8_sync, emg_amp_inhouse
+        string serial_number = 4;                    // string: '', '', '', uma_syn_001, emg_amp_001
+        string signal_name = 5;                      // string: mic_0, pressure, syn_uma8, emg, syn_stim, stim, …
+        string headstage = 6;                        // string: '', intan32, ", intan32
+        string channel_group = 7;                    // string: AIN, port_0, DIN, port_1
+        string channels = 8;                         // string: [0], [aux_0], [0], [aux_0, aux_1]
+        string locations = 9;                        // string: left, right, tracheal rings, muscles...
+        repeated string details = 10;                // repeated string: Any additional info
+    }
+
+    // // Stimulus presented to subject during recordings (Message)
     message Stimulus {
-    
-        // Stimulus presented to subject during recordings
-        enum StimulusType {
-            UNKNOWN_STIMULUS = 0;
-            UNDIRECTED = 1;
-            DIRECTED = 2;
-            VIDEO_RECORDED = 3;
-            VIDEO_LIVE = 4;
-            SONG_REPLAY = 5;
-         }
-        
-        StimulusType stimulus_type = 1;
-        repeated string details = 2; // Any additional info
+        string stimulus_signal = 1;     //  string: female, video, song_replay, neural_stim
+        string manufacturer = 2;        //  string: '', inhouse, inhouse, neuronexus
+        string model = 3;               //   string: '', '', '3 females in cage, buzsaki32
+        string serial_number = 4;
+        string channel_gropup = 5;      //  string: AIN, port_0, DIN, port_1
+        string channels = 6;            //  string: [0], [aux_0], [0], [aux_0, aux_1]
+        repeated string details = 7;    //  repeated string: Any additional info
     }
     
-    // Procedure (Message)
-    message Procedure {
-    
-        // Experiment Type
-        enum ExperimentType {
-            UNKNOWN_EXPERYMENTTYPE = 0;
-            HABITUATION = 1;
-            CHRONIC_HVC = 2;
-            CHRONIC_RA = 3;
-            CHRONIC_HVCRA = 4;
-            ACUTE_HVC = 5;
-            ACUTE_RA = 6;
-            ACUTE_HVCRA = 7;        
-        }
-
-        // Hardware System used for recordings
-        enum EphysHardware {
-             UNKNOWN_EPHYSHARDWARE = 0;
-             OPENEPHYS = 1;
-             INTAN = 2;
-             NI = 3;
-         }
-
-        // Software used for recordings
-        enum EphysSoftware {
-             UNKNOWN_EPHYSSOFTWARE = 0;
-             SPIKEGLX = 1;
-             OPEPHYS = 2;
-             OPEPHYS_PLUS = 3;
-         }
-
-        ExperimentType experiment_type = 1;
-        repeated Stimulus stimuli = 2;
-        EphysHardware ephys_harware = 3;
-        EphysSoftware ephys_software = 4;
-        string headstage = 5;
-        repeated Probe probes = 6;
+    // // ACQUISITION SYSTEM that may have multiple sensors / stimuli attached (Message)
+    message Acquisition {
+        string acquisition_hardware = 1;     //  string: openephys, intan, spikeglx, uma8, raspi, any custom amp
+        string acquisition_software = 2;     //  string: openephys, openephys++, spikeglx, alsa, vlc
+        
+        repeated NeuralProbe neuralprobes = 13;
+        repeated Sensor sensors = 14;
+        repeated Stimulus stimuli = 15;
     }
     
     
@@ -95,23 +65,46 @@ message Session {
         ZEBRA = 1;
         STARLING = 2;
         BENGALESE = 3;
-    }
+        }
+
+    // Bird Sex
+    enum BirdSex {
+        UNKNOWN_BIRDSEX = 0;
+        MALE = 1;
+        FEMALE = 2;
+        }
+
+    // Condition
+    enum Condition {
+        UNKNOWN_CONDITION = 0;
+        HABITUATION = 1;
+        CHRONIC = 2;
+        ACUTE = 3;
+        }
+
+    BirdType bird_type = 1;         // UNKNOWN_BIRDTYPE(0), ZEBRA(1), STARLING(2), BENGALESE(3)
+    BirdSex bird_sex = 2;           // UNKNOWN_BIRDSEX(0), MALE(1), FEMALE(2)
+    string bird_uid = 3;            // string: e.g. z_m10g8_20
+    string date = 4;                // string: e.g. 2021-03-10
+    string time = 5;                // string: e.g. 14:42:01.754603 (microseconds precision)
+    float weight_grams = 6;         // float
+    bool testosterone = 7;          // bool: True / False
+    string testosterone_date = 8;   // string: e.g. 2021-03-10
+    bool dummy_weight = 9;          // bool: True / False
+    string dummy_weight_date = 10;   // string: e.g. 2021-03-10
+    bool dummy_tether = 11;          // bool: True / False
+    string dummy_tether_date = 12;   // string: e.g. 2021-03-10
+    Condition condition = 13;       // UNKNOWN_CONDITION(0), HABITUATION(1), CHRONIC(2), ACUTE(3)
+    string sess_uid = 14;            // string: e.g. habituation_birdID_date_time
+    string box = 15;                // string: e.g. passaro1, cuervecito3, shoox
+    repeated string details = 16;   // repeated string: (Any additional info)
     
-    BirdType bird = 1;
-    string bird_uid = 2;
-    //BirdSex bird_sex = 1;
-    string date = 3;              // (iso8061, e.g. 2020-11-01)
-    float weight_grams = 4;
-    bool testosterone = 5;        // 0-No; 1-Yes;
-    int32 cuervecito_box = 6;
-    repeated string details = 7; // Any additional info
-    
-    repeated Procedure procedure = 8;
+    repeated Acquisition acquisitions = 17;
 }
 
 
 // Compile message:
-// protoc --proto_path=/home/jovyan/pablo_tostado/bird_song/protobuffs --python_out=/home/jovyan/pablo_tostado/bird_song/protobuffs/ /home/jovyan/pablo_tostado/bird_song/protobuffs/metadata.proto
+// protoc --proto_path=/home/jovyan/pablo_tostado/bird_song/protobuff_serialization --python_out=/home/jovyan/pablo_tostado/bird_song/protobuff_serialization/ /home/jovyan/pablo_tostado/bird_song/protobuff_serialization/metadata.proto
 
 
 //-> bird
