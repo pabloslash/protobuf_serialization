@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0emetadata.proto\x12\rtnel.birdsong\"\xc5\x0c\n\x07Session\x12\x32\n\tbird_type\x18\x01 \x01(\x0e\x32\x1f.tnel.birdsong.Session.BirdType\x12\x30\n\x08\x62ird_sex\x18\x02 \x01(\x0e\x32\x1e.tnel.birdsong.Session.BirdSex\x12\x10\n\x08\x62ird_uid\x18\x03 \x01(\t\x12\x0c\n\x04\x64\x61te\x18\x04 \x01(\t\x12\x0c\n\x04time\x18\x05 \x01(\t\x12\x14\n\x0cweight_grams\x18\x06 \x01(\x02\x12\x14\n\x0ctestosterone\x18\x07 \x01(\x08\x12\x19\n\x11testosterone_date\x18\x08 \x01(\t\x12\x14\n\x0c\x64ummy_weight\x18\t \x01(\x08\x12\x19\n\x11\x64ummy_weight_date\x18\n \x01(\t\x12\x14\n\x0c\x64ummy_tether\x18\x0b \x01(\x08\x12\x19\n\x11\x64ummy_tether_date\x18\x0c \x01(\t\x12\x33\n\tcondition\x18\r \x01(\x0e\x32 .tnel.birdsong.Session.Condition\x12\x10\n\x08sess_uid\x18\x0e \x01(\t\x12\x0b\n\x03\x62ox\x18\x0f \x01(\t\x12\x0f\n\x07\x64\x65tails\x18\x10 \x03(\t\x12\x38\n\x0c\x61\x63quisitions\x18\x11 \x03(\x0b\x32\".tnel.birdsong.Session.Acquisition\x1a\xb3\x02\n\x0bNeuralProbe\x12\x1a\n\x12\x61\x63quisition_signal\x18\x01 \x01(\t\x12\x14\n\x0cmanufacturer\x18\x02 \x01(\t\x12\r\n\x05model\x18\x03 \x01(\t\x12\x15\n\rserial_number\x18\x04 \x01(\t\x12\x14\n\x0cnum_channels\x18\x05 \x01(\x05\x12\x19\n\x11tip_depth_microns\x18\x06 \x01(\x02\x12#\n\x1bimplant_coordinates_microns\x18\x07 \x01(\t\x12\x12\n\nhemisphere\x18\x08 \x01(\t\x12\x15\n\rbrain_nucleus\x18\t \x03(\t\x12\x11\n\theadstage\x18\n \x01(\t\x12\x15\n\rchannel_group\x18\x0b \x01(\t\x12\x10\n\x08\x63hannels\x18\x0c \x01(\t\x12\x0f\n\x07\x64\x65tails\x18\r \x03(\t\x1a\xd5\x01\n\x06Sensor\x12\x1a\n\x12\x61\x63quisition_signal\x18\x01 \x01(\t\x12\x14\n\x0cmanufacturer\x18\x02 \x01(\t\x12\r\n\x05model\x18\x03 \x01(\t\x12\x15\n\rserial_number\x18\x04 \x01(\t\x12\x13\n\x0bsignal_name\x18\x05 \x01(\t\x12\x11\n\theadstage\x18\x06 \x01(\t\x12\x15\n\rchannel_group\x18\x07 \x01(\t\x12\x10\n\x08\x63hannels\x18\x08 \x01(\t\x12\x11\n\tlocations\x18\t \x01(\t\x12\x0f\n\x07\x64\x65tails\x18\n \x03(\t\x1a\x9a\x01\n\x08Stimulus\x12\x17\n\x0fstimulus_signal\x18\x01 \x01(\t\x12\x14\n\x0cmanufacturer\x18\x02 \x01(\t\x12\r\n\x05model\x18\x03 \x01(\t\x12\x15\n\rserial_number\x18\x04 \x01(\t\x12\x16\n\x0e\x63hannel_gropup\x18\x05 \x01(\t\x12\x10\n\x08\x63hannels\x18\x06 \x01(\t\x12\x0f\n\x07\x64\x65tails\x18\x07 \x03(\t\x1a\xe5\x01\n\x0b\x41\x63quisition\x12\x1c\n\x14\x61\x63quisition_hardware\x18\x01 \x01(\t\x12\x1c\n\x14\x61\x63quisition_software\x18\x02 \x01(\t\x12\x38\n\x0cneuralprobes\x18\r \x03(\x0b\x32\".tnel.birdsong.Session.NeuralProbe\x12.\n\x07sensors\x18\x0e \x03(\x0b\x32\x1d.tnel.birdsong.Session.Sensor\x12\x30\n\x07stimuli\x18\x0f \x03(\x0b\x32\x1f.tnel.birdsong.Session.Stimulus\"H\n\x08\x42irdType\x12\x14\n\x10UNKNOWN_BIRDTYPE\x10\x00\x12\t\n\x05ZEBRA\x10\x01\x12\x0c\n\x08STARLING\x10\x02\x12\r\n\tBENGALESE\x10\x03\"4\n\x07\x42irdSex\x12\x13\n\x0fUNKNOWN_BIRDSEX\x10\x00\x12\x08\n\x04MALE\x10\x01\x12\n\n\x06\x46\x45MALE\x10\x02\"K\n\tCondition\x12\x15\n\x11UNKNOWN_CONDITION\x10\x00\x12\x0f\n\x0bHABITUATION\x10\x01\x12\x0b\n\x07\x43HRONIC\x10\x02\x12\t\n\x05\x41\x43UTE\x10\x03\x62\x06proto3'
+  serialized_pb=b'\n\x0emetadata.proto\x12\rtnel.birdsong\"\xf6\x0c\n\x07Session\x12\x32\n\tbird_type\x18\x01 \x01(\x0e\x32\x1f.tnel.birdsong.Session.BirdType\x12\x30\n\x08\x62ird_sex\x18\x02 \x01(\x0e\x32\x1e.tnel.birdsong.Session.BirdSex\x12\x10\n\x08\x62ird_uid\x18\x03 \x01(\t\x12\x0c\n\x04\x64\x61te\x18\x04 \x01(\t\x12\x0c\n\x04time\x18\x05 \x01(\t\x12\x14\n\x0cweight_grams\x18\x06 \x01(\x02\x12\x14\n\x0ctestosterone\x18\x07 \x01(\x08\x12\x19\n\x11testosterone_date\x18\x08 \x01(\t\x12\x14\n\x0c\x64ummy_weight\x18\t \x01(\x08\x12\x1a\n\x12\x64ummy_weight_grams\x18\n \x01(\x02\x12\x19\n\x11\x64ummy_weight_date\x18\x0b \x01(\t\x12\x14\n\x0c\x64ummy_tether\x18\x0c \x01(\x08\x12\x19\n\x11\x64ummy_tether_date\x18\r \x01(\t\x12\x33\n\tcondition\x18\x0e \x01(\x0e\x32 .tnel.birdsong.Session.Condition\x12\x10\n\x08sess_uid\x18\x0f \x01(\t\x12\x0b\n\x03\x62ox\x18\x10 \x01(\t\x12\x0f\n\x07\x64\x65tails\x18\x11 \x03(\t\x12\x38\n\x0c\x61\x63quisitions\x18\x12 \x03(\x0b\x32\".tnel.birdsong.Session.Acquisition\x1a\xb3\x02\n\x0bNeuralProbe\x12\x1a\n\x12\x61\x63quisition_signal\x18\x01 \x01(\t\x12\x14\n\x0cmanufacturer\x18\x02 \x01(\t\x12\r\n\x05model\x18\x03 \x01(\t\x12\x15\n\rserial_number\x18\x04 \x01(\t\x12\x14\n\x0cnum_channels\x18\x05 \x01(\x05\x12\x19\n\x11tip_depth_microns\x18\x06 \x01(\x02\x12#\n\x1bimplant_coordinates_microns\x18\x07 \x01(\t\x12\x12\n\nhemisphere\x18\x08 \x01(\t\x12\x15\n\rbrain_nucleus\x18\t \x03(\t\x12\x11\n\theadstage\x18\n \x01(\t\x12\x15\n\rchannel_group\x18\x0b \x01(\t\x12\x10\n\x08\x63hannels\x18\x0c \x01(\t\x12\x0f\n\x07\x64\x65tails\x18\r \x03(\t\x1a\xd5\x01\n\x06Sensor\x12\x1a\n\x12\x61\x63quisition_signal\x18\x01 \x01(\t\x12\x14\n\x0cmanufacturer\x18\x02 \x01(\t\x12\r\n\x05model\x18\x03 \x01(\t\x12\x15\n\rserial_number\x18\x04 \x01(\t\x12\x13\n\x0bsignal_name\x18\x05 \x01(\t\x12\x11\n\theadstage\x18\x06 \x01(\t\x12\x15\n\rchannel_group\x18\x07 \x01(\t\x12\x10\n\x08\x63hannels\x18\x08 \x01(\t\x12\x11\n\tlocations\x18\t \x01(\t\x12\x0f\n\x07\x64\x65tails\x18\n \x03(\t\x1a\xaf\x01\n\x08Stimulus\x12\x17\n\x0fstimulus_signal\x18\x01 \x01(\t\x12\x14\n\x0cmanufacturer\x18\x02 \x01(\t\x12\r\n\x05model\x18\x03 \x01(\t\x12\x15\n\rserial_number\x18\x04 \x01(\t\x12\x13\n\x0bsignal_name\x18\x05 \x01(\t\x12\x16\n\x0e\x63hannel_gropup\x18\x06 \x01(\t\x12\x10\n\x08\x63hannels\x18\x07 \x01(\t\x12\x0f\n\x07\x64\x65tails\x18\x08 \x03(\t\x1a\xe5\x01\n\x0b\x41\x63quisition\x12\x1c\n\x14\x61\x63quisition_hardware\x18\x01 \x01(\t\x12\x1c\n\x14\x61\x63quisition_software\x18\x02 \x01(\t\x12\x38\n\x0cneuralprobes\x18\r \x03(\x0b\x32\".tnel.birdsong.Session.NeuralProbe\x12.\n\x07sensors\x18\x0e \x03(\x0b\x32\x1d.tnel.birdsong.Session.Sensor\x12\x30\n\x07stimuli\x18\x0f \x03(\x0b\x32\x1f.tnel.birdsong.Session.Stimulus\"H\n\x08\x42irdType\x12\x14\n\x10UNKNOWN_BIRDTYPE\x10\x00\x12\t\n\x05ZEBRA\x10\x01\x12\x0c\n\x08STARLING\x10\x02\x12\r\n\tBENGALESE\x10\x03\"4\n\x07\x42irdSex\x12\x13\n\x0fUNKNOWN_BIRDSEX\x10\x00\x12\x08\n\x04MALE\x10\x01\x12\n\n\x06\x46\x45MALE\x10\x02\"K\n\tCondition\x12\x15\n\x11UNKNOWN_CONDITION\x10\x00\x12\x0f\n\x0bHABITUATION\x10\x01\x12\x0b\n\x07\x43HRONIC\x10\x02\x12\t\n\x05\x41\x43UTE\x10\x03\x62\x06proto3'
 )
 
 
@@ -54,8 +54,8 @@ _SESSION_BIRDTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1436,
-  serialized_end=1508,
+  serialized_start=1485,
+  serialized_end=1557,
 )
 _sym_db.RegisterEnumDescriptor(_SESSION_BIRDTYPE)
 
@@ -84,8 +84,8 @@ _SESSION_BIRDSEX = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1510,
-  serialized_end=1562,
+  serialized_start=1559,
+  serialized_end=1611,
 )
 _sym_db.RegisterEnumDescriptor(_SESSION_BIRDSEX)
 
@@ -119,8 +119,8 @@ _SESSION_CONDITION = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1564,
-  serialized_end=1639,
+  serialized_start=1613,
+  serialized_end=1688,
 )
 _sym_db.RegisterEnumDescriptor(_SESSION_CONDITION)
 
@@ -236,8 +236,8 @@ _SESSION_NEURALPROBE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=522,
-  serialized_end=829,
+  serialized_start=550,
+  serialized_end=857,
 )
 
 _SESSION_SENSOR = _descriptor.Descriptor(
@@ -330,8 +330,8 @@ _SESSION_SENSOR = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=832,
-  serialized_end=1045,
+  serialized_start=860,
+  serialized_end=1073,
 )
 
 _SESSION_STIMULUS = _descriptor.Descriptor(
@@ -371,22 +371,29 @@ _SESSION_STIMULUS = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='channel_gropup', full_name='tnel.birdsong.Session.Stimulus.channel_gropup', index=4,
+      name='signal_name', full_name='tnel.birdsong.Session.Stimulus.signal_name', index=4,
       number=5, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='channels', full_name='tnel.birdsong.Session.Stimulus.channels', index=5,
+      name='channel_gropup', full_name='tnel.birdsong.Session.Stimulus.channel_gropup', index=5,
       number=6, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='details', full_name='tnel.birdsong.Session.Stimulus.details', index=6,
-      number=7, type=9, cpp_type=9, label=3,
+      name='channels', full_name='tnel.birdsong.Session.Stimulus.channels', index=6,
+      number=7, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='details', full_name='tnel.birdsong.Session.Stimulus.details', index=7,
+      number=8, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -403,8 +410,8 @@ _SESSION_STIMULUS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1048,
-  serialized_end=1202,
+  serialized_start=1076,
+  serialized_end=1251,
 )
 
 _SESSION_ACQUISITION = _descriptor.Descriptor(
@@ -462,8 +469,8 @@ _SESSION_ACQUISITION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1205,
-  serialized_end=1434,
+  serialized_start=1254,
+  serialized_end=1483,
 )
 
 _SESSION = _descriptor.Descriptor(
@@ -538,57 +545,64 @@ _SESSION = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='dummy_weight_date', full_name='tnel.birdsong.Session.dummy_weight_date', index=9,
-      number=10, type=9, cpp_type=9, label=1,
+      name='dummy_weight_grams', full_name='tnel.birdsong.Session.dummy_weight_grams', index=9,
+      number=10, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='dummy_weight_date', full_name='tnel.birdsong.Session.dummy_weight_date', index=10,
+      number=11, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='dummy_tether', full_name='tnel.birdsong.Session.dummy_tether', index=10,
-      number=11, type=8, cpp_type=7, label=1,
+      name='dummy_tether', full_name='tnel.birdsong.Session.dummy_tether', index=11,
+      number=12, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='dummy_tether_date', full_name='tnel.birdsong.Session.dummy_tether_date', index=11,
-      number=12, type=9, cpp_type=9, label=1,
+      name='dummy_tether_date', full_name='tnel.birdsong.Session.dummy_tether_date', index=12,
+      number=13, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='condition', full_name='tnel.birdsong.Session.condition', index=12,
-      number=13, type=14, cpp_type=8, label=1,
+      name='condition', full_name='tnel.birdsong.Session.condition', index=13,
+      number=14, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='sess_uid', full_name='tnel.birdsong.Session.sess_uid', index=13,
-      number=14, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='box', full_name='tnel.birdsong.Session.box', index=14,
+      name='sess_uid', full_name='tnel.birdsong.Session.sess_uid', index=14,
       number=15, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='details', full_name='tnel.birdsong.Session.details', index=15,
-      number=16, type=9, cpp_type=9, label=3,
+      name='box', full_name='tnel.birdsong.Session.box', index=15,
+      number=16, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='details', full_name='tnel.birdsong.Session.details', index=16,
+      number=17, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='acquisitions', full_name='tnel.birdsong.Session.acquisitions', index=16,
-      number=17, type=11, cpp_type=10, label=3,
+      name='acquisitions', full_name='tnel.birdsong.Session.acquisitions', index=17,
+      number=18, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -609,7 +623,7 @@ _SESSION = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=34,
-  serialized_end=1639,
+  serialized_end=1688,
 )
 
 _SESSION_NEURALPROBE.containing_type = _SESSION

@@ -42,9 +42,10 @@ message Session {
         string manufacturer = 2;        //  string: '', inhouse, inhouse, neuronexus
         string model = 3;               //   string: '', '', '3 females in cage, buzsaki32
         string serial_number = 4;
-        string channel_gropup = 5;      //  string: AIN, port_0, DIN, port_1
-        string channels = 6;            //  string: [0], [aux_0], [0], [aux_0, aux_1]
-        repeated string details = 7;    //  repeated string: Any additional info
+        string signal_name = 5;
+        string channel_gropup = 6;      //  string: AIN, port_0, DIN, port_1
+        string channels = 7;            //  string: [0], [aux_0], [0], [aux_0, aux_1]
+        repeated string details = 8;    //  repeated string: Any additional info
     }
     
     // // ACQUISITION SYSTEM that may have multiple sensors / stimuli attached (Message)
@@ -91,15 +92,16 @@ message Session {
     bool testosterone = 7;          // bool: True / False
     string testosterone_date = 8;   // string: e.g. 2021-03-10
     bool dummy_weight = 9;          // bool: True / False
-    string dummy_weight_date = 10;   // string: e.g. 2021-03-10
-    bool dummy_tether = 11;          // bool: True / False
-    string dummy_tether_date = 12;   // string: e.g. 2021-03-10
-    Condition condition = 13;       // UNKNOWN_CONDITION(0), HABITUATION(1), CHRONIC(2), ACUTE(3)
-    string sess_uid = 14;            // string: e.g. habituation_birdID_date_time
-    string box = 15;                // string: e.g. passaro1, cuervecito3, shoox
-    repeated string details = 16;   // repeated string: (Any additional info)
+    float dummy_weight_grams = 10;          // bool: True / False
+    string dummy_weight_date = 11;   // string: e.g. 2021-03-10
+    bool dummy_tether = 12;          // bool: True / False
+    string dummy_tether_date = 13;   // string: e.g. 2021-03-10
+    Condition condition = 14;       // UNKNOWN_CONDITION(0), HABITUATION(1), CHRONIC(2), ACUTE(3)
+    string sess_uid = 15;            // string: e.g. habituation_birdID_date_time
+    string box = 16;                // string: e.g. passaro1, cuervecito3, shoox
+    repeated string details = 17;   // repeated string: (Any additional info)
     
-    repeated Acquisition acquisitions = 17;
+    repeated Acquisition acquisitions = 18;
 }
 
 
