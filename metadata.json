@@ -2,11 +2,11 @@
      "birdType": "ZEBRA",
      "birdSex": "MALE",
      "birdUid": "z_m10g8_20",
-     "date": "2021-04-19",
-     "time": "19:12:48.139860",
+     "date": "2021-04-20",
+     "time": "16:31:29.633068",
      "weightGrams": 18.3,
      "condition": "HABITUATION",
-     "sessUid": "HABITUATION-z_m10g8_20-20210419-19:12:48",
+     "sessUid": "HABITUATION-z_m10g8_20-20210420-16:31:29",
      "box": "cuervecito3",
      "details": [
           "dummy_weight + tether"
