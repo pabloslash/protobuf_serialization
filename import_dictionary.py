@@ -1,4 +1,3 @@
-
 # Load the .pickle containing the dictionary for the protobuf message
 # Read dictionary from pickle and create protobuf metadata-message
 
@@ -17,52 +16,89 @@ class ProtobuffMetadata:
         self.sess.date = str(datetime.now(pytz.timezone('US/Pacific')).date())
         # string: e.g. 14:42:01.754603 (microseconds precision)
         self.sess.time = str(datetime.now(pytz.timezone('US/Pacific')).time())
+        self.empty_bird_metadata()
 
-    def read_bird_metadata(self, bird_metadata_file):
+    '''Functions to load metadata from file'''
+    '''TODO: Add options to read from json file'''
 
-        with open(bird_metadata_file, 'rb') as file:
+    # Load all metadata from metadata file
+    def load_metadata_from_file(self, metadata_file):
+        with open(metadata_file, 'rb') as file:
             session_dict = pickle.load(file)
+        # Read bird metadata
+        self.read_bird_metadata(session_dict)
+        # Read acquisitions metadata
+        if 'acquisitions' in session_dict:
+            for acquisition_dict in session_dict['acquisitions']:
+                self.add_acquisition_metadata(acquisition_dict)
 
-        if 'bird_type' in session_dict:  # UNKNOWN_BIRDTYPE(0), ZEBRA(1), STARLING(2), BENGALESE(3)
-            if session_dict['bird_type'] == 'STARLING': self.sess.bird_type = self.sess.BirdType.STARLING
-            elif session_dict['bird_type'] == 'ZEBRA': self.sess.bird_type = self.sess.BirdType.ZEBRA
-            elif session_dict['bird_type'] == 'BENGALESE': self.sess.bird_type = self.sess.BirdType.BENGALESE
-            else: self.sess.bird_type = self.sess.BirdType.UNKNOWN_BIRDTYPE  # Also if user input is unrecognized
+    # Load BIRD metadata from metadata file
+    def load_bird_from_file(self, bird_file):
+        with open(bird_file, 'rb') as file:
+            bird_dict = pickle.load(file)
+        self.read_bird_metadata(bird_dict)
 
-        if 'bird_sex' in session_dict:  # UNKNOWN_BIRDSEX(0), MALE(1), FEMALE(2)
-            if session_dict['bird_sex'] == 'MALE': self.sess.bird_sex = self.sess.BirdSex.MALE
-            elif session_dict['bird_sex'] == 'FEMALE': self.sess.bird_sex = self.sess.BirdSex.FEMALE
-            else: self.sess.bird_sex = self.sess.BirdSex.UNKNOWN_BIRDSEX  # Also if user input is unrecognized
-        if 'condition' in session_dict:  # UNKNOWN_CONDITION(0), HABITUATION(1), CHRONIC(2), ACUTE(3)
-            if session_dict['condition'] == 'HABITUATION': self.sess.condition = self.sess.Condition.HABITUATION
-            elif session_dict['condition'] == 'CHRONIC': self.sess.condition = self.sess.Condition.CHRONIC
-            elif session_dict['condition'] == 'ACUTE': self.sess.condition = self.sess.Condition.ACUTE
-            else: self.sess.condition = self.sess.Condition.UNKNOWN_CONDITION  # Also if user input is unrecognized
+    # Load ACQUISITION(s) metadata from metadata file
+    def load_acquisition_from_file(self, acquisition_file):
+        with open(acquisition_file, 'rb') as file:
+            acquisition_dict = pickle.load(file)
+        # Read acquisitions metadata
+        if 'acquisitions' in acquisition_dict:
+            for acq in acquisition_dict['acquisitions']:
+                self.add_acquisition_metadata(acq)
 
-        if 'bird_uid' in session_dict: self.sess.bird_uid = session_dict['bird_uid']  # string e.g. z_m10g8_20
-        if 'weight_grams' in session_dict: self.sess.weight_grams = session_dict['weight_grams']  # float
-        if 'testosterone' in session_dict: self.sess.testosterone = session_dict['testosterone']  # bool: True / False
-        if 'testosterone_date' in session_dict: self.sess.testosterone_date = session_dict[
+    '''Functions to read metadata from a dictionary'''
+
+    def read_bird_metadata(self, bird_dict):
+        if 'bird_type' in bird_dict:  # UNKNOWN_BIRDTYPE(0), ZEBRA(1), STARLING(2), BENGALESE(3)
+            if bird_dict['bird_type'] == 'STARLING':
+                self.sess.bird_type = self.sess.BirdType.STARLING
+            elif bird_dict['bird_type'] == 'ZEBRA':
+                self.sess.bird_type = self.sess.BirdType.ZEBRA
+            elif bird_dict['bird_type'] == 'BENGALESE':
+                self.sess.bird_type = self.sess.BirdType.BENGALESE
+            else:
+                self.sess.bird_type = self.sess.BirdType.UNKNOWN_BIRDTYPE  # Also if user input is unrecognized
+
+        if 'bird_sex' in bird_dict:  # UNKNOWN_BIRDSEX(0), MALE(1), FEMALE(2)
+            if bird_dict['bird_sex'] == 'MALE':
+                self.sess.bird_sex = self.sess.BirdSex.MALE
+            elif bird_dict['bird_sex'] == 'FEMALE':
+                self.sess.bird_sex = self.sess.BirdSex.FEMALE
+            else:
+                self.sess.bird_sex = self.sess.BirdSex.UNKNOWN_BIRDSEX  # Also if user input is unrecognized
+        if 'condition' in bird_dict:  # UNKNOWN_CONDITION(0), HABITUATION(1), CHRONIC(2), ACUTE(3)
+            if bird_dict['condition'] == 'HABITUATION':
+                self.sess.condition = self.sess.Condition.HABITUATION
+            elif bird_dict['condition'] == 'CHRONIC':
+                self.sess.condition = self.sess.Condition.CHRONIC
+            elif bird_dict['condition'] == 'ACUTE':
+                self.sess.condition = self.sess.Condition.ACUTE
+            else:
+                self.sess.condition = self.sess.Condition.UNKNOWN_CONDITION  # Also if user input is unrecognized
+
+        if 'bird_uid' in bird_dict: self.sess.bird_uid = bird_dict['bird_uid']  # string e.g. z_m10g8_20
+        if 'weight_grams' in bird_dict: self.sess.weight_grams = bird_dict['weight_grams']  # float
+        if 'testosterone' in bird_dict: self.sess.testosterone = bird_dict['testosterone']  # bool: True / False
+        if 'testosterone_date' in bird_dict: self.sess.testosterone_date = bird_dict[
             'testosterone_date']  # string: e.g. 2021-03-10
-        if 'dummy_weight' in session_dict: self.sess.dummy_weight = session_dict[
+        if 'dummy_weight' in bird_dict: self.sess.dummy_weight = bird_dict[
             'dummy_weight']  # bool: True / False
-        if 'dummy_weight_grams' in session_dict: self.sess.dummy_weight_grams = session_dict[
+        if 'dummy_weight_grams' in bird_dict: self.sess.dummy_weight_grams = bird_dict[
             'dummy_weight_grams']  # bool: True / False
-        if 'dummy_weight_date' in session_dict: self.sess.dummy_weight_date = session_dict[
+        if 'dummy_weight_date' in bird_dict: self.sess.dummy_weight_date = bird_dict[
             'dummy_weight_date']  # string: e.g. 2021-03-10
-        if 'dummy_tether' in session_dict: self.sess.dummy_tether = session_dict[
+        if 'dummy_tether' in bird_dict: self.sess.dummy_tether = bird_dict[
             'dummy_tether']  # bool: True / False
-        if 'dummy_tether_date' in session_dict: self.sess.dummy_tether_date = session_dict[
+        if 'dummy_tether_date' in bird_dict: self.sess.dummy_tether_date = bird_dict[
             'dummy_tether_date']  # string: e.g. 2021-03-10
-        if 'box' in session_dict: self.sess.box = session_dict['box']  # string: e.g. passaro1, cuervecito3, shoox
-        if 'details' in session_dict:
-            for det in session_dict['details']: self.sess.details.append(det)  # repeated string: (Any additional info)
+        if 'box' in bird_dict: self.sess.box = bird_dict['box']  # string: e.g. passaro1, cuervecito3, shoox
+        if 'details' in bird_dict:
+            for det in bird_dict['details']: self.sess.details.append(det)  # repeated string: (Any additional info)
 
         self.sess.sess_uid = self.sess.Condition.keys()[
                                  self.sess.condition] + '-' + self.sess.bird_uid + '-' + datetime.now(
             pytz.timezone('US/Pacific')).strftime("%Y%m%d-%H:%M:%S")  # string: e.g. habituation_birdID_date_time
-
-        return self.sess
 
     def add_acquisition_metadata(self, acquisition_dict):
         acquisition = self.sess.acquisitions.add()
@@ -70,7 +106,6 @@ class ProtobuffMetadata:
             'acquisition_hardware']  # openephys, intan, spikeglx, uma8, raspi, any custom amp
         if 'acquisition_software' in acquisition_dict: acquisition.acquisition_software = acquisition_dict[
             'acquisition_software']  # openephys, openephys++, spikeglx, alsa, vlc
-
         # Iterate over Sensors
         if 'sensors' in acquisition_dict:
             for sensor_dict in acquisition_dict['sensors']:
@@ -170,3 +205,6 @@ class ProtobuffMetadata:
         self.sess.dummy_tether = False
         self.sess.dummy_tether_date = ''
         self.sess.box = ''
+        self.sess.sess_uid = self.sess.Condition.keys()[
+                                 self.sess.condition] + '-' + self.sess.bird_uid + '-' + datetime.now(
+            pytz.timezone('US/Pacific')).strftime("%Y%m%d-%H:%M:%S")  # string: e.g. habituation_birdID_date_time
