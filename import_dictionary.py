@@ -5,7 +5,9 @@ import pickle
 import metadata_pb2
 from datetime import datetime
 import pytz
-
+import json
+import pickle
+from google.protobuf.json_format import MessageToDict
 
 class ProtobuffMetadata:
 
@@ -16,15 +18,25 @@ class ProtobuffMetadata:
         self.sess.date = str(datetime.now(pytz.timezone('US/Pacific')).date())
         # string: e.g. 14:42:01.754603 (microseconds precision)
         self.sess.time = str(datetime.now(pytz.timezone('US/Pacific')).time())
-        self.empty_bird_metadata()
+        self.default_bird_metadata()
 
     '''Functions to load metadata from file'''
     '''TODO: Add options to read from json file'''
 
     # Load all metadata from metadata file
-    def load_metadata_from_file(self, metadata_file):
-        with open(metadata_file, 'rb') as file:
-            session_dict = pickle.load(file)
+    def load_file(self, file_name):
+        if file_name.endswith('.pickle'):
+            with open(file_name, 'rb') as f:
+                session_dict = pickle.load(f)
+        elif file_name.endswith('.json'):
+            with open(file_name) as f:
+                session_dict = json.load(f)            
+        else: return
+        return session_dict
+    
+    def load_metadata_from_file(self, file_name):
+        session_dict = self.load_file(file_name)
+        
         # Read bird metadata
         self.read_bird_metadata(session_dict)
         # Read acquisitions metadata
@@ -33,22 +45,26 @@ class ProtobuffMetadata:
                 self.add_acquisition_metadata(acquisition_dict)
 
     # Load BIRD metadata from metadata file
-    def load_bird_from_file(self, bird_file):
-        with open(bird_file, 'rb') as file:
-            bird_dict = pickle.load(file)
+    def load_bird_metadata_from_file(self, file_name):
+        bird_dict = self.load_file(file_name)
         self.read_bird_metadata(bird_dict)
+        
+    # Load ACQUISITION metadata from metadata file
+    def load_acquisition_from_file(self, file_name):
+        acquisition_dict = self.load_file(file_name)
+        # Read acquisitions metadata
+        self.add_acquisition_metadata(acquisition_dict)
 
     # Load ACQUISITION(s) metadata from metadata file
-    def load_acquisition_from_file(self, acquisition_file):
-        with open(acquisition_file, 'rb') as file:
-            acquisition_dict = pickle.load(file)
+    def load_acquisitions_from_file(self, file_name):
+        acquisitions_dict = self.load_file(file_name)
         # Read acquisitions metadata
-        if 'acquisitions' in acquisition_dict:
-            for acq in acquisition_dict['acquisitions']:
+        if 'acquisitions' in acquisitions_dict:
+            for acq in acquisitions_dict['acquisitions']:
                 self.add_acquisition_metadata(acq)
 
     '''Functions to read metadata from a dictionary'''
-
+    
     def read_bird_metadata(self, bird_dict):
         if 'bird_type' in bird_dict:  # UNKNOWN_BIRDTYPE(0), ZEBRA(1), STARLING(2), BENGALESE(3)
             if bird_dict['bird_type'] == 'STARLING':
@@ -181,6 +197,12 @@ class ProtobuffMetadata:
                     'channels']  # string: [0], [aux_0], [0], [aux_0, aux_1]
                 if 'details' in stimulus_dict:
                     for det in stimulus_dict['details']: stimulus.details.append(det)  # repeated string
+                        
+    def add_aquisitions_metadata(self, acquisitions_dict):
+        # Iterate over ACQUISITIONS
+        if 'acquisitions' in acquisitions_dict:
+            for acquisition_dict in session_dict['acquisitions']:
+                self.add_acquisition_metadata(acquisition_dict)
 
     def read_aquisitions_metadata(self, acquisition_metadata_file):
         with open(acquisition_metadata_file, 'rb') as file:
@@ -191,20 +213,33 @@ class ProtobuffMetadata:
             for acquisition_dict in session_dict['acquisitions']:
                 self.add_acquisition_metadata(acquisition_dict)
 
-    def empty_bird_metadata(self):
+    def default_bird_metadata(self):
         self.sess.bird_type = self.sess.BirdType.UNKNOWN_BIRDTYPE
         self.sess.bird_sex = self.sess.BirdSex.MALE
         self.sess.Condition.UNKNOWN_CONDITION
-        self.sess.bird_uid = ''
-        self.sess.weight_grams = None
+        self.sess.bird_uid = 'x_x00x00_00'
         self.sess.testosterone = False
-        self.sess.testosterone_date = ''
+        self.sess.testosterone_date = 'YYYY-MM-DD'
         self.sess.dummy_weight = False
-        self.sess.dummy_weight_grams = None
-        self.sess.dummy_weight_date = ''
+        self.sess.dummy_weight_grams = 0
+        self.sess.dummy_weight_date = 'YYYY-MM-DD'
         self.sess.dummy_tether = False
-        self.sess.dummy_tether_date = ''
+        self.sess.dummy_tether_date = 'YYYY-MM-DD'
         self.sess.box = ''
         self.sess.sess_uid = self.sess.Condition.keys()[
                                  self.sess.condition] + '-' + self.sess.bird_uid + '-' + datetime.now(
             pytz.timezone('US/Pacific')).strftime("%Y%m%d-%H:%M:%S")  # string: e.g. habituation_birdID_date_time
+        
+    '''Saving Functions'''
+    
+    def save_metadata_json(self, metadata_dict, file_name):
+        json_obj = MessageToDict(metadata_dict, including_default_value_fields=False, preserving_proto_field_name=False, use_integers_for_enums=False, descriptor_pool=None, float_precision=None)
+
+        with open(file_name, 'w') as fj:
+            json.dump(json_obj, fj, indent=5)
+        fj.close()
+
+    def save_metadata_pickle(self, metadata_dict, file_name):
+        with open(file_name, 'wb') as fp:
+            pickle.dump(metadata_dict, fp, protocol=pickle.HIGHEST_PROTOCOL)
+        fp.close()

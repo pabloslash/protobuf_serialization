@@ -1,0 +1,110 @@
+{
+     "birdSex": "MALE",
+     "birdUid": "x_x00x00_00",
+     "date": "2021-04-28",
+     "time": "23:02:47.213796",
+     "testosteroneDate": "YYYY-MM-DD",
+     "dummyWeightDate": "YYYY-MM-DD",
+     "dummyTetherDate": "YYYY-MM-DD",
+     "sessUid": "UNKNOWN_CONDITION-x_x00x00_00-20210428-23:02:47",
+     "acquisitions": [
+          {
+               "acquisitionHardware": "uma8-usb",
+               "acquisitionSoftware": "alsa",
+               "sensors": [
+                    {
+                         "acquisitionSignal": "audio",
+                         "manufacturer": "miniDSP",
+                         "model": "uma8raw",
+                         "signalName": "audio_raw",
+                         "channels": "0-6",
+                         "locations": "OUT",
+                         "details": [
+                              "Positioned in top-back-left and top-front-right corners of the chamber.",
+                              "detalis2"
+                         ]
+                    },
+                    {
+                         "acquisitionSignal": "audio",
+                         "manufacturer": "miniDSP",
+                         "model": "uma8DSP",
+                         "signalName": "audio_DSP",
+                         "channels": "7-8",
+                         "locations": "OUT",
+                         "details": [
+                              "Positioned in top-back-left and top-front-right corners of the chamber.",
+                              "detalis2"
+                         ]
+                    },
+                    {
+                         "acquisitionSignal": "sync_imec",
+                         "manufacturer": "inhouse",
+                         "model": "uma_syn",
+                         "serialNumber": "uma_syn_001",
+                         "signalName": "uma_syn_001",
+                         "channelGroup": "PDM",
+                         "channels": "7",
+                         "locations": "OUT",
+                         "details": [
+                              "Positioned in top-back-left and top-front-right corners of the chamber.",
+                              "detalis2"
+                         ]
+                    }
+               ]
+          },
+          {
+               "acquisitionHardware": "IMEC",
+               "acquisitionSoftware": "spikeglx",
+               "neuralprobes": [
+                    {
+                         "acquisitionSignal": "neural",
+                         "manufacturer": "neuropixel",
+                         "model": "neuropixels_1",
+                         "serialNumber": "U656",
+                         "numChannels": 385,
+                         "tipDepthMicrons": 3500.0,
+                         "implantCoordinatesMicrons": "500, 2700, 3500",
+                         "hemisphere": "right",
+                         "brainNucleus": [
+                              "hvc",
+                              "ra"
+                         ],
+                         "headstage": "neuropixel",
+                         "channelGroup": "port_0",
+                         "channels": "1-385",
+                         "details": [
+                              "details"
+                         ]
+                    }
+               ],
+               "sensors": [
+                    {
+                         "acquisitionSignal": "audio",
+                         "manufacturer": "earthworks",
+                         "model": "m30",
+                         "serialNumber": "tuvieja",
+                         "signalName": "mic_0",
+                         "channelGroup": "AIN",
+                         "channels": "AIN0",
+                         "locations": "out",
+                         "details": [
+                              "Positioned in top-back-left and top-front-right corners of the chamber.",
+                              "detalis2"
+                         ]
+                    }
+               ],
+               "stimuli": [
+                    {
+                         "stimulusSignal": "prerecorded video",
+                         "manufacturer": "inhouse",
+                         "model": "3 females in cage",
+                         "channelGropup": "AIN",
+                         "channels": "aux_0",
+                         "details": [
+                              "details"
+                         ]
+                    }
+               ]
+          }
+     ]
+}

@@ -1,0 +1,1 @@
+{'bird_type': 'ZEBRA', 'bird_sex': 'MALE', 'bird_uid': 'z_m10g8_20', 'weight_grams': 18.3, 'testosterone': True, 'testosterone_date': '2021-03-10', 'dummy_weight': True, 'dummy_weight_grams': 0.6, 'dummy_weight_date': '2021-03-10', 'dummy_tether': True, 'dummy_tether_date': '2021-03-10', 'condition': 'HABITUATION', 'box': 'cuervecito3', 'details': ['dummy_weight + tether']}
