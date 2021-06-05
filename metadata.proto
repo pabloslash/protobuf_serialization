@@ -11,8 +11,8 @@ message Session {
         string manufacturer = 2;                     // string: neuronexus, neuropixel, masmanidis, inhouse
         string model = 3;                            // string: buzsaki32, neuropixels_1
         string serial_number = 4;                    // string: U656
-        int32  num_channels = 5;                      // int32: 16, 32, 64, 384
-        float  tip_depth_microns = 6;                 // float: depth of the tip of the probe
+        int32  num_channels = 5;                     // int32: 16, 32, 64, 384
+        float  tip_depth_microns = 6;                // float: depth of the tip of the probe
         string implant_coordinates_microns = 7;      // string: A/P, M/L, D/V
         string hemisphere = 8;                       // string: left, right
         repeated string brain_nucleus= 9;            // repeated string: [hvc], [hvc,ra], area_X

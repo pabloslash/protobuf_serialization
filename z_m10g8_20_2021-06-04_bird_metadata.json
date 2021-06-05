@@ -1,0 +1,22 @@
+{
+     "bird_type": "ZEBRA",
+     "bird_sex": "MALE",
+     "bird_uid": "z_m10g8_20",
+     "date": "2021-06-04",
+     "time": "18:42:09.716854",
+     "weight_grams": 18.3,
+     "testosterone": true,
+     "testosterone_date": "2021-03-10",
+     "dummy_weight": true,
+     "dummy_weight_grams": 0.6,
+     "dummy_weight_date": "2021-03-10",
+     "dummy_tether": true,
+     "dummy_tether_date": "2021-03-10",
+     "condition": "HABITUATION",
+     "sess_uid": "HABITUATION-z_m10g8_20-20210604-18:42:09",
+     "box": "cuervecito3",
+     "details": [
+          "dummy_weight + tether"
+     ],
+     "acquisitions": []
+}

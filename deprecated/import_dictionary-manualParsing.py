@@ -67,12 +67,6 @@ class ProtobufMetadata:
     '''Functions to read metadata from a dictionary'''
     
     def read_bird_metadata(self, bird_dict):
-        
-        # If input is a metadata object instead of a dictionary, 
-        if type(bird_dict) == metadata_pb2.Session:
-            bird_dict = MessageToDict(bird_dict, including_default_value_fields=True, preserving_proto_field_name=True, 
-                                 use_integers_for_enums=False, descriptor_pool=None, float_precision=None)
-        
         if 'bird_type' in bird_dict:  # UNKNOWN_BIRDTYPE(0), ZEBRA(1), STARLING(2), BENGALESE(3)
             if bird_dict['bird_type'] == 'STARLING':
                 self.sess.bird_type = self.sess.BirdType.STARLING
@@ -123,7 +117,7 @@ class ProtobufMetadata:
                                  self.sess.condition] + '-' + self.sess.bird_uid + '-' + datetime.now(
             pytz.timezone('US/Pacific')).strftime("%Y%m%d-%H:%M:%S")  # string: e.g. habituation_birdID_date_time
 
-    def read_acquisition_metadata(self, acquisition_dict):
+    def add_acquisition_metadata(self, acquisition_dict):
         acquisition = self.sess.acquisitions.add()
         if 'acquisition_hardware' in acquisition_dict: acquisition.acquisition_hardware = acquisition_dict[
             'acquisition_hardware']  # openephys, intan, spikeglx, uma8, raspi, any custom amp
@@ -205,20 +199,20 @@ class ProtobufMetadata:
                 if 'details' in stimulus_dict:
                     for det in stimulus_dict['details']: stimulus.details.append(det)  # repeated string
                         
-    def read_aquisitions_metadata(self, acquisitions_dict):
+    def add_aquisitions_metadata(self, acquisitions_dict):
         # Iterate over ACQUISITIONS
         if 'acquisitions' in acquisitions_dict:
-            for acquisition_dict in acquisitions_dict['acquisitions']:
-                self.read_acquisition_metadata(acquisition_dict)
+            for acquisition_dict in session_dict['acquisitions']:
+                self.add_acquisition_metadata(acquisition_dict)
 
-#     def read_aquisitions_metadata(self, acquisition_metadata_file):
-#         with open(acquisition_metadata_file, 'rb') as file:
-#             session_dict = pickle.load(file)
+    def read_aquisitions_metadata(self, acquisition_metadata_file):
+        with open(acquisition_metadata_file, 'rb') as file:
+            session_dict = pickle.load(file)
 
-#         # Iterate over ACQUISITIONS
-#         if 'acquisitions' in session_dict:
-#             for acquisition_dict in session_dict['acquisitions']:
-#                 self.add_acquisition_metadata(acquisition_dict)
+        # Iterate over ACQUISITIONS
+        if 'acquisitions' in session_dict:
+            for acquisition_dict in session_dict['acquisitions']:
+                self.add_acquisition_metadata(acquisition_dict)
 
     def default_bird_metadata(self):
         self.sess.bird_type = self.sess.BirdType.UNKNOWN_BIRDTYPE
@@ -237,25 +231,16 @@ class ProtobufMetadata:
                                  self.sess.condition] + '-' + self.sess.bird_uid + '-' + datetime.now(
             pytz.timezone('US/Pacific')).strftime("%Y%m%d-%H:%M:%S")  # string: e.g. habituation_birdID_date_time
         
-    '''Exporting & Loading Functions'''
+    '''Saving Functions'''
     
-    def serialize_metadata(self, file_name):
-        '''Save metadata as a serialized, binary file'''
-        f = open(file_name, "wb")
-        f.write(self.sess.SerializeToString())
-        f.close()
+    def save_metadata_json(self, metadata_dict, file_name):
+        json_obj = MessageToDict(metadata_dict, including_default_value_fields=False, preserving_proto_field_name=False, use_integers_for_enums=False, descriptor_pool=None, float_precision=None)
 
-    def parse_serialized_metadata(self, filename):
-        f = open(filename, "rb")
-        self.sess.ParseFromString(f.read())
-        f.close()
-        
-    def export_metadata_to_json(self, file_name):
-        json_obj = MessageToDict(self.sess, including_default_value_fields=True, preserving_proto_field_name=True, 
-                                 use_integers_for_enums=False, descriptor_pool=None, float_precision=None)
         with open(file_name, 'w') as fj:
             json.dump(json_obj, fj, indent=5)
         fj.close()
-        
-    def parse_metadata_from_json():
-        #TODO
+
+    def save_metadata_pickle(self, metadata_dict, file_name):
+        with open(file_name, 'wb') as fp:
+            pickle.dump(metadata_dict, fp, protocol=pickle.HIGHEST_PROTOCOL)
+        fp.close()
