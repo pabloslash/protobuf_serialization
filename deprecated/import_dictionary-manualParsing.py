@@ -7,6 +7,7 @@ from datetime import datetime
 import pytz
 import json
 import pickle
+from operator import attrgetter
 from google.protobuf.json_format import MessageToDict
 
 class ProtobufMetadata:
@@ -214,6 +215,24 @@ class ProtobufMetadata:
             for acquisition_dict in session_dict['acquisitions']:
                 self.add_acquisition_metadata(acquisition_dict)
 
+        
+    '''Saving Functions'''
+    
+    def save_metadata_json(self, metadata_dict, file_name):
+        json_obj = MessageToDict(metadata_dict, including_default_value_fields=False, preserving_proto_field_name=False, use_integers_for_enums=False, descriptor_pool=None, float_precision=None)
+
+        with open(file_name, 'w') as fj:
+            json.dump(json_obj, fj, indent=5)
+        fj.close()
+
+    def save_metadata_pickle(self, metadata_dict, file_name):
+        with open(file_name, 'wb') as fp:
+            pickle.dump(metadata_dict, fp, protocol=pickle.HIGHEST_PROTOCOL)
+        fp.close()
+        
+        
+    '''Set Defaults Functions'''
+    
     def default_bird_metadata(self):
         self.sess.bird_type = self.sess.BirdType.UNKNOWN_BIRDTYPE
         self.sess.bird_sex = self.sess.BirdSex.MALE
@@ -231,16 +250,11 @@ class ProtobufMetadata:
                                  self.sess.condition] + '-' + self.sess.bird_uid + '-' + datetime.now(
             pytz.timezone('US/Pacific')).strftime("%Y%m%d-%H:%M:%S")  # string: e.g. habituation_birdID_date_time
         
-    '''Saving Functions'''
-    
-    def save_metadata_json(self, metadata_dict, file_name):
-        json_obj = MessageToDict(metadata_dict, including_default_value_fields=False, preserving_proto_field_name=False, use_integers_for_enums=False, descriptor_pool=None, float_precision=None)
+        
+    #     def delete_attribute(self, metadata_object, attribute_name):
+        
+#         attribute_getter = attrgetter(attribute_name)
+#         for atribute in attribute_getter(metadata_object):
+#             del(attribute)
 
-        with open(file_name, 'w') as fj:
-            json.dump(json_obj, fj, indent=5)
-        fj.close()
 
-    def save_metadata_pickle(self, metadata_dict, file_name):
-        with open(file_name, 'wb') as fp:
-            pickle.dump(metadata_dict, fp, protocol=pickle.HIGHEST_PROTOCOL)
-        fp.close()

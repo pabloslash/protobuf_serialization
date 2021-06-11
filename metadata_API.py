@@ -1,17 +1,19 @@
-# Load the .pickle containing the dictionary for the protobuf message
-# Read dictionary from pickle and create protobuf metadata-message
-
 import pickle
 import metadata_pb2
 from datetime import datetime
 import pytz
 import json
 import pickle
+from operator import attrgetter
 from google.protobuf.json_format import MessageToDict
+from google.protobuf.json_format import ParseDict
 
 class ProtobufMetadata:
 
+    """ Manage Protobuf Metadata for Birdsong Project """
+    
     def __init__(self):
+        
         # Create SESSION protobuff metadata
         self.sess = metadata_pb2.Session()
         # string: e.g. 2021-03-10
@@ -19,54 +21,40 @@ class ProtobufMetadata:
         # string: e.g. 14:42:01.754603 (microseconds precision)
         self.sess.time = str(datetime.now(pytz.timezone('US/Pacific')).time())
         self.default_bird_metadata()
+        
+    def update_date_and_time(self):
+        """ Updates the date, time and sess_uid fields in the proto message """
+        
+        self.sess.date = str(datetime.now(pytz.timezone('US/Pacific')).date())
+        self.sess.time = str(datetime.now(pytz.timezone('US/Pacific')).time())
+        self.sess.sess_uid = self.sess.Condition.keys()[
+                                 self.sess.condition] + '-' + self.sess.bird_uid + '-' + self.sess.date + '-' + self.sess.time  # string: e.g. habituation_birdID_date_time
 
-    '''Functions to load metadata from file'''
-    '''TODO: Add options to read from json file'''
-
-    # Load all metadata from metadata file
-    def load_file(self, file_name):
-        if file_name.endswith('.pickle'):
-            with open(file_name, 'rb') as f:
-                session_dict = pickle.load(f)
-        elif file_name.endswith('.json'):
-            with open(file_name) as f:
-                session_dict = json.load(f)    
-                print('.json file loaded correctly')
-        else: return
-        return session_dict
     
-    def load_metadata_from_file(self, file_name):
-        session_dict = self.load_file(file_name)
+    def delete_attribute(self, metadata_object, attribute):
+        """ Deletes an attribute from the proto message
         
-        # Read bird metadata
-        self.read_bird_metadata(session_dict)
-        # Read acquisitions metadata
-        if 'acquisitions' in session_dict:
-            for acquisition_dict in session_dict['acquisitions']:
-                self.add_acquisition_metadata(acquisition_dict)
-
-    # Load BIRD metadata from metadata file
-    def load_bird_metadata_from_file(self, file_name):
-        bird_dict = self.load_file(file_name)
-        self.read_bird_metadata(bird_dict)
+        Parameters
+        ----------
+        metadata_object : protobuf object
+            The message object from which to delete the attribute
+        attribute : str
+            Name of the attribute to delete
+        """
         
-    # Load ACQUISITION metadata from metadata file
-    def load_acquisition_from_file(self, file_name):
-        acquisition_dict = self.load_file(file_name)
-        # Read acquisitions metadata
-        self.add_acquisition_metadata(acquisition_dict)
-
-    # Load ACQUISITION(s) metadata from metadata file
-    def load_acquisitions_from_file(self, file_name):
-        acquisitions_dict = self.load_file(file_name)
-        # Read acquisitions metadata
-        if 'acquisitions' in acquisitions_dict:
-            for acq in acquisitions_dict['acquisitions']:
-                self.add_acquisition_metadata(acq)
+        metadata_object.ClearField(attribute)
+    
 
     '''Functions to read metadata from a dictionary'''
     
     def read_bird_metadata(self, bird_dict):
+        """ Parses a protobuf message dictionary or python dictionary and fills out the metadata corresponding to the bird
+        
+        Parameters
+        ----------
+        bird_dict : dictionary
+            Dictionary from which to parse bird metadata
+        """
         
         # If input is a metadata object instead of a dictionary, 
         if type(bird_dict) == metadata_pb2.Session:
@@ -123,7 +111,9 @@ class ProtobufMetadata:
                                  self.sess.condition] + '-' + self.sess.bird_uid + '-' + datetime.now(
             pytz.timezone('US/Pacific')).strftime("%Y%m%d-%H:%M:%S")  # string: e.g. habituation_birdID_date_time
 
-    def read_acquisition_metadata(self, acquisition_dict):
+    def __read_acquisition_metadata(self, acquisition_dict):
+        """ Private method to iterate over acquisitions when parsing a dictionary"""
+        
         acquisition = self.sess.acquisitions.add()
         if 'acquisition_hardware' in acquisition_dict: acquisition.acquisition_hardware = acquisition_dict[
             'acquisition_hardware']  # openephys, intan, spikeglx, uma8, raspi, any custom amp
@@ -206,21 +196,31 @@ class ProtobufMetadata:
                     for det in stimulus_dict['details']: stimulus.details.append(det)  # repeated string
                         
     def read_aquisitions_metadata(self, acquisitions_dict):
+        """ Parses a protobuf message dictionary or python dictionary and fills out the metadata corresponding to the acquisitions
+        
+        Parameters
+        ----------
+        acquisitions_dict : dictionary
+            Dictionary from which to parse acquisitions metadata
+        """
+            
         # Iterate over ACQUISITIONS
         if 'acquisitions' in acquisitions_dict:
             for acquisition_dict in acquisitions_dict['acquisitions']:
-                self.read_acquisition_metadata(acquisition_dict)
+                self.__read_acquisition_metadata(acquisition_dict)
 
-#     def read_aquisitions_metadata(self, acquisition_metadata_file):
-#         with open(acquisition_metadata_file, 'rb') as file:
-#             session_dict = pickle.load(file)
 
-#         # Iterate over ACQUISITIONS
-#         if 'acquisitions' in session_dict:
-#             for acquisition_dict in session_dict['acquisitions']:
-#                 self.add_acquisition_metadata(acquisition_dict)
-
+    '''Set Defaults Functions'''
+    
     def default_bird_metadata(self):
+        """ Set default values for bird metadata
+
+        Parameters
+        ----------
+        file_name : str
+            The name of the file without the extension
+        """
+        
         self.sess.bird_type = self.sess.BirdType.UNKNOWN_BIRDTYPE
         self.sess.bird_sex = self.sess.BirdSex.MALE
         self.sess.Condition.UNKNOWN_CONDITION
@@ -234,28 +234,68 @@ class ProtobufMetadata:
         self.sess.dummy_tether_date = 'YYYY-MM-DD'
         self.sess.box = ''
         self.sess.sess_uid = self.sess.Condition.keys()[
-                                 self.sess.condition] + '-' + self.sess.bird_uid + '-' + datetime.now(
-            pytz.timezone('US/Pacific')).strftime("%Y%m%d-%H:%M:%S")  # string: e.g. habituation_birdID_date_time
-        
+                                 self.sess.condition] + '-' + self.sess.bird_uid + '-' + self.sess.date + '-' + self.sess.time  # string: e.g. habituation_birdID_date_time
+    
+    ## TODO : set defaults for acquisition, sensor, neural probe etc.
+    
     '''Exporting & Loading Functions'''
     
     def serialize_metadata(self, file_name):
-        '''Save metadata as a serialized, binary file'''
-        f = open(file_name, "wb")
+        """ Save metadata as a serialized, binary file (.pb)
+
+        Parameters
+        ----------
+        file_name : str
+            The name of the file without the extension
+        """
+        
+        f = open(file_name + '.pb', "wb")
         f.write(self.sess.SerializeToString())
         f.close()
 
     def parse_serialized_metadata(self, filename):
+        """ Load metadata from serialized, binary file (.pb)
+        
+        Parameters
+        ----------
+        file_name : str
+            The name of the file without the extension
+        """
+        
         f = open(filename, "rb")
         self.sess.ParseFromString(f.read())
         f.close()
         
     def export_metadata_to_json(self, file_name):
+        """ Save metadata as a human-readable JSON file (.json)
+        
+        Parameters
+        ----------
+        file_name : str
+            The name of the file without the extension
+        """
+        
         json_obj = MessageToDict(self.sess, including_default_value_fields=True, preserving_proto_field_name=True, 
                                  use_integers_for_enums=False, descriptor_pool=None, float_precision=None)
-        with open(file_name, 'w') as fj:
+        with open(file_name + '.json', 'w') as fj:
             json.dump(json_obj, fj, indent=5)
         fj.close()
         
-    def parse_metadata_from_json():
-        #TODO
+    def parse_metadata_from_json(self, filename):
+        """ Load metadata from metadata from JSON file (.json)
+        
+        Parameters
+        ----------
+        file_name : str
+            The name of the file without the extension
+        """
+        
+        f = open(filename)
+        json_dict = json.load(f)
+        f.close()
+        ParseDict(json_dict, self.sess, ignore_unknown_fields=False, descriptor_pool=None)
+    
+
+        
+
+
