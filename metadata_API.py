@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+
+"""Manage Protobuf Metadata for Birdsong Project"""
+
 import pickle
 import metadata_pb2
 from datetime import datetime
@@ -7,6 +11,17 @@ import pickle
 from operator import attrgetter
 from google.protobuf.json_format import MessageToDict
 from google.protobuf.json_format import ParseDict
+
+
+__author__ = "Pablo M. Tostado"
+__copyright__ = "Copyright 2021, Pablo Tostado"
+__credits__ = [""]
+__license__ = "Apache 2.0"
+__version__ = "1.0.0"
+__maintainer__ = "Pablo Tostado"
+__email__ = "patostad@eng.ucsd.edu"
+__status__ = "Production"
+
 
 class ProtobufMetadata:
 
