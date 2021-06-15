@@ -1,0 +1,70 @@
+{
+     "bird_sex": "MALE",
+     "bird_uid": "x_x00x00_00",
+     "date": "2021-06-14",
+     "time": "18:48:08.775876",
+     "testosterone_date": "YYYY-MM-DD",
+     "dummy_weight_date": "YYYY-MM-DD",
+     "dummy_tether_date": "YYYY-MM-DD",
+     "sess_uid": "UNKNOWN_CONDITION-x_x00x00_00-2021-06-14-18:48:08.775876",
+     "box": "_",
+     "acquisitions": [
+          {
+               "acquisition_hardware": "hardware",
+               "acquisition_software": "software",
+               "neuralprobes": [
+                    {
+                         "acquisition_signal": "neural",
+                         "manufacturer": "neuropixel",
+                         "model": "neuropixel_1",
+                         "serial_number": "Uxxx",
+                         "num_channels": 384,
+                         "implant_coordinates_microns": "00 A/P, 00 M/L, 00 D/V",
+                         "hemisphere": "none",
+                         "brain_nucleus": [
+                              "append repeated strings"
+                         ],
+                         "headstage": "_",
+                         "channel_group": "imec X",
+                         "channels": "00-00",
+                         "tip_depth_microns": 0.0,
+                         "details": []
+                    }
+               ],
+               "sensors": [
+                    {
+                         "acquisition_signal": "_",
+                         "manufacturer": "_",
+                         "model": "_",
+                         "serial_number": "_",
+                         "signal_name": "_",
+                         "headstage": "_",
+                         "channel_group": "_",
+                         "channels": "_",
+                         "locations": "_",
+                         "details": []
+                    }
+               ],
+               "stimuli": [
+                    {
+                         "stimulus_signal": "_",
+                         "manufacturer": "_",
+                         "model": "_",
+                         "serial_number": "_",
+                         "signal_name": "_",
+                         "channel_gropup": "_",
+                         "channels": "_",
+                         "details": []
+                    }
+               ]
+          }
+     ],
+     "bird_type": "UNKNOWN_BIRDTYPE",
+     "weight_grams": 0.0,
+     "testosterone": false,
+     "dummy_weight": false,
+     "dummy_weight_grams": 0.0,
+     "dummy_tether": false,
+     "condition": "UNKNOWN_CONDITION",
+     "details": []
+}

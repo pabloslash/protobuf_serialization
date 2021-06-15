@@ -247,11 +247,81 @@ class ProtobufMetadata:
         self.sess.dummy_weight_date = 'YYYY-MM-DD'
         self.sess.dummy_tether = False
         self.sess.dummy_tether_date = 'YYYY-MM-DD'
-        self.sess.box = ''
+        self.sess.box = '_'
         self.sess.sess_uid = self.sess.Condition.keys()[
                                  self.sess.condition] + '-' + self.sess.bird_uid + '-' + self.sess.date + '-' + self.sess.time  # string: e.g. habituation_birdID_date_time
-    
-    ## TODO : set defaults for acquisition, sensor, neural probe etc.
+        
+    def default_acquisition_metadata(self, metadata_object):
+        """ Set default values for acquisition metadata
+
+        Parameters
+        ----------
+        metadata_object : protobuf object
+            The protobuf Acquisition object for which to set default values
+        """
+        
+        metadata_object.acquisition_hardware = 'hardware'
+        metadata_object.acquisition_software = 'software'
+        
+        
+    def default_neural_probe_metadata(self, metadata_object):
+        """ Set default values for a Neural Probe metadata object
+
+        Parameters
+        ----------
+        metadata_object : protobuf object
+            The protobuf Neural Probe object for which to set default values
+        """
+        
+        metadata_object.acquisition_signal = 'neural'
+        metadata_object.manufacturer = 'neuropixel'
+        metadata_object.model = 'neuropixel_1'
+        metadata_object.serial_number = 'Uxxx'
+        metadata_object.num_channels = 384
+        metadata_object.tip_depth_microns = 0
+        metadata_object.implant_coordinates_microns = '00 A/P, 00 M/L, 00 D/V'
+        metadata_object.hemisphere = 'none'
+        metadata_object.brain_nucleus.append("append repeated strings")
+        metadata_object.headstage = '_'
+        metadata_object.channel_group = 'imec X'
+        metadata_object.channels = '00-00'
+        
+        
+    def default_sensor_metadata(self, metadata_object):
+        """ Set default values for a Sensor metadata object
+
+        Parameters
+        ----------
+        metadata_object : protobuf object
+            The protobuf Sensor object for which to set default values 
+        """
+        
+        metadata_object.acquisition_signal = '_'
+        metadata_object.manufacturer = '_'
+        metadata_object.model = '_'
+        metadata_object.serial_number = '_'
+        metadata_object.signal_name = '_'
+        metadata_object.headstage = '_'
+        metadata_object.channel_group = '_'
+        metadata_object.channels = '_'
+        metadata_object.locations = '_'
+        
+    def default_stimulus_metadata(self, metadata_object):
+        """ Set default values for a Stimulus metadata object
+
+        Parameters
+        ----------
+        file_name : str
+            The protobuf Stimulus object for which to set default values
+        """
+            
+        metadata_object.stimulus_signal = '_'
+        metadata_object.manufacturer = '_'
+        metadata_object.model = '_'
+        metadata_object.serial_number = '_'
+        metadata_object.signal_name = '_'
+        metadata_object.channel_gropup = '_'
+        metadata_object.channels = '_'
     
     '''Exporting & Loading Functions'''
     

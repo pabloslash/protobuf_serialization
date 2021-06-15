@@ -1,0 +1,20 @@
+{
+     "bird_sex": "MALE",
+     "bird_uid": "x_x00x00_00",
+     "date": "2021-06-14",
+     "time": "18:46:40.768953",
+     "testosterone_date": "YYYY-MM-DD",
+     "dummy_weight_date": "YYYY-MM-DD",
+     "dummy_tether_date": "YYYY-MM-DD",
+     "sess_uid": "UNKNOWN_CONDITION-x_x00x00_00-2021-06-14-18:46:40.768953",
+     "box": "_",
+     "bird_type": "UNKNOWN_BIRDTYPE",
+     "weight_grams": 0.0,
+     "testosterone": false,
+     "dummy_weight": false,
+     "dummy_weight_grams": 0.0,
+     "dummy_tether": false,
+     "condition": "UNKNOWN_CONDITION",
+     "details": [],
+     "acquisitions": []
+}
