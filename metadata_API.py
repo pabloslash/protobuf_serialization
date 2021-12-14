@@ -118,6 +118,10 @@ class ProtobufMetadata:
             'dummy_tether']  # bool: True / False
         if 'dummy_tether_date' in bird_dict: self.sess.dummy_tether_date = bird_dict[
             'dummy_tether_date']  # string: e.g. 2021-03-10
+        if 'dummy_implant' in bird_dict: self.sess.dummy_implant = bird_dict[
+            'dummy_implant']  # bool: True / False
+        if 'dummy_implant_date' in bird_dict: self.sess.dummy_implant_date = bird_dict[
+            'dummy_implant_date']  # string: e.g. 2021-03-10
         if 'box' in bird_dict: self.sess.box = bird_dict['box']  # string: e.g. passaro1, cuervecito3, shoox
         if 'details' in bird_dict:
             for det in bird_dict['details']: self.sess.details.append(det)  # repeated string: (Any additional info)
@@ -247,6 +251,8 @@ class ProtobufMetadata:
         self.sess.dummy_weight_date = 'YYYY-MM-DD'
         self.sess.dummy_tether = False
         self.sess.dummy_tether_date = 'YYYY-MM-DD'
+        self.sess.dummy_implant = False
+        self.sess.dummy_implant_date = 'YYYY-MM-DD'
         self.sess.box = '_'
         self.sess.sess_uid = self.sess.Condition.keys()[
                                  self.sess.condition] + '-' + self.sess.bird_uid + '-' + self.sess.date + '-' + self.sess.time  # string: e.g. habituation_birdID_date_time
@@ -367,7 +373,7 @@ class ProtobufMetadata:
         fj.close()
         
     def parse_metadata_from_json(self, filename):
-        """ Load metadata from metadata from JSON file (.json)
+        """ Load metadata from JSON file (.json)
         
         Parameters
         ----------

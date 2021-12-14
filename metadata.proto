@@ -96,12 +96,14 @@ message Session {
     string dummy_weight_date = 11;   // string: e.g. 2021-03-10
     bool dummy_tether = 12;          // bool: True / False
     string dummy_tether_date = 13;   // string: e.g. 2021-03-10
-    Condition condition = 14;       // UNKNOWN_CONDITION(0), HABITUATION(1), CHRONIC(2), ACUTE(3)
-    string sess_uid = 15;            // string: e.g. habituation_birdID_date_time
-    string box = 16;                // string: e.g. passaro1, cuervecito3, shoox
-    repeated string details = 17;   // repeated string: (Any additional info)
+    bool dummy_implant = 14;          // bool: True / False
+    string dummy_implant_date = 15;   // string: e.g. 2021-03-10
+    Condition condition = 16;       // UNKNOWN_CONDITION(0), HABITUATION(1), CHRONIC(2), ACUTE(3)
+    string sess_uid = 17;            // string: e.g. habituation_birdID_date_time
+    string box = 18;                // string: e.g. passaro1, cuervecito3, shoox
+    repeated string details = 19;   // repeated string: (Any additional info)
     
-    repeated Acquisition acquisitions = 18;
+    repeated Acquisition acquisitions = 20;
 }
 
 
